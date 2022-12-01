@@ -122,7 +122,8 @@ const float	IT_SUPER_NAILGUN		= 8;
 const float	IT_GRENADE_LAUNCHER		= 16;
 const float	IT_ROCKET_LAUNCHER		= 32;
 const float	IT_LIGHTNING			= 64;
-const float	IT_WEAPONS				= 127 + 4096;
+const float	IT_PLASMA_GUN			= 128;
+const float	IT_WEAPONS				= 255 + 4096;
 
 const float	IT_SHELLS				= 256;
 const float	IT_NAILS				= 512;
