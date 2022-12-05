@@ -44,6 +44,8 @@ void() Cheat_Items =
 		IT_ROCKET_LAUNCHER;
 
 	self.items = self.items | IT_LIGHTNING;
+	
+	self.items = self.items | IT_PLASMA_GUN;
 
 	self.weapon = IT_ROCKET_LAUNCHER;
 

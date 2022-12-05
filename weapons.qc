@@ -94,7 +94,7 @@ void() W_SetCurrentAmmo =
 		self.currentammo = self.ammo_rockets;
 		self.items = self.items | IT_ROCKETS;
 	}
-	else if (self.weapon == IT_LIGHTNING)
+	else if (self.weapon == IT_LIGHTNING || self.weapon == IT_PLASMA_GUN)
 	{
 		self.currentammo = self.ammo_cells;
 		self.items = self.items | IT_CELLS;
@@ -129,6 +129,8 @@ void() W_ResetWeaponState =
 		self.weaponmodel = "progs/v_rock2.mdl";
 	else if (self.weapon == IT_LIGHTNING)
 		self.weaponmodel = "progs/v_light.mdl";
+	else if (self.weapon == IT_PLASMA_GUN)
+		self.weaponmodel = "progs/v_light.mdl"; // Temp until there's a new model.
 	else
 		self.weaponmodel = string_null;
 
@@ -141,15 +143,17 @@ float(float w) W_RankForWeapon =
 		return 1;
 	if (w == IT_ROCKET_LAUNCHER)
 		return 2;
-	if (w == IT_SUPER_NAILGUN)
+	if (w == IT_PLASMA_GUN)
 		return 3;
-	if (w == IT_GRENADE_LAUNCHER)
+	if (w == IT_SUPER_NAILGUN)
 		return 4;
-	if (w == IT_SUPER_SHOTGUN)
+	if (w == IT_GRENADE_LAUNCHER)
 		return 5;
-	if (w == IT_NAILGUN)
+	if (w == IT_SUPER_SHOTGUN)
 		return 6;
-	return 7;
+	if (w == IT_NAILGUN)
+		return 7;
+	return 8;
 }
 
 /*
@@ -186,7 +190,7 @@ float(float weap) W_HasAmmo =
 	if (weap == IT_SHOTGUN)			return (self.ammo_shells >= 1);
 	if (weap == IT_NAILGUN)			return (self.ammo_nails >= 1);
 	if (weap == IT_SUPER_NAILGUN)	return (self.ammo_nails >= 2);
-	if (weap == IT_LIGHTNING)		return (self.ammo_cells >= 1);
+	if (weap == IT_LIGHTNING || weap == IT_PLASMA_GUN)		return (self.ammo_cells >= 1);
 	
 	if (weap == IT_GRENADE_LAUNCHER || weap == IT_ROCKET_LAUNCHER)
 		return (self.ammo_rockets >= 1);
@@ -204,6 +208,8 @@ float() W_BestWeapon =
 		return IT_SUPER_SHOTGUN;
 	if (self.waterlevel <= 1 && W_HasAmmo(IT_LIGHTNING))
 		return IT_LIGHTNING;
+	if (W_HasAmmo(IT_PLASMA_GUN))
+		return IT_PLASMA_GUN;
 	if(W_HasAmmo(IT_NAILGUN))
 		return IT_NAILGUN;
 	if(W_HasAmmo(IT_SHOTGUN))
@@ -282,7 +288,11 @@ void() W_Attack =
 		player_rocket1();
 		W_FireRocket();
 	}
-
+	else if (self.weapon == IT_PLASMA_GUN)
+	{
+		player_rocket1();
+		W_FirePlasma();
+	}
 	else if (self.weapon == IT_LIGHTNING)
 	{
 		player_light1();
@@ -352,6 +362,12 @@ void() W_ChangeWeapon =
 		if (self.ammo_cells < 1)
 			am = 1;
 	}
+	else if (self.impulse == 9)
+	{
+		fl = IT_PLASMA_GUN;
+		if (self.ammo_cells < 1)
+			am = 1;
+	}
 
 	self.impulse = 0;
 	
@@ -381,14 +397,14 @@ for players who insist on shuffling through their inventory the slow way
 float W_Next(float w) =
 {
 	if (w == IT_AXE) return IT_SHOTGUN;
-	else if (w == IT_LIGHTNING) return IT_AXE;
+	else if (w == IT_PLASMA_GUN) return IT_AXE;
 	else return w * 2;
 }
 
 float W_Prev(float w) =
 {
 	if (w == IT_SHOTGUN) return IT_AXE;
-	else if (w == IT_AXE) return IT_LIGHTNING;
+	else if (w == IT_AXE) return IT_PLASMA_GUN;
 	else return w / 2;
 }
 

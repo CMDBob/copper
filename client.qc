@@ -1844,6 +1844,11 @@ void() ClientObituary =
 				else
 					deathstring2 = "'s shaft\n";
 			}
+			if (rnum == IT_PLASMA_GUN)
+			{
+				deathstring = " was energized by ";
+				deathstring2 = "'s plasma blast\n";
+			}
 			bprint (self.netname);
 			bprint (deathstring);
 			bprint (attacker.netname);

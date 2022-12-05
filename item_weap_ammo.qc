@@ -303,6 +303,30 @@ void() weapon_lightning =
 	StartWeapon();
 }
 
+/*QUAKED weapon_plasmagun (0 0 1) (-16 -16 0) (16 16 56) ? ? SUSPENDED
+Plasma Gun
+
+Keys:
+"target/2/3/4/k" - entity to trigger when picked up
+"targetname" - will not spawn until triggered
+"wait" - will respawn after 'wait' seconds. fires targets every time.
+"count" - limit number of times to respawn
+*/
+/*FGD
+@PointClass base(Weapon) model({ "path": ":progs/g_light.mdl" }) = weapon_plasmagun : "Plasma Gun.
+12 cells." []
+*/
+void() weapon_plasmagun =
+{
+	if (!SUB_ShouldSpawn()) return;
+	precache_model_safe ("progs/g_light.mdl");
+	setmodel (self, "progs/g_light.mdl");
+	self.items = IT_PLASMA_GUN;
+	self.ammo_cells = 12;
+	self.netname = "Plasma Gun";
+	StartWeapon();
+}
+
 
 // ===============================================================================
 

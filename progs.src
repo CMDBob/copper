@@ -29,6 +29,7 @@ w_lightning.qc
 w_shotguns.qc
 w_rockets.qc
 w_nails.qc
+w_plasma.qc
 dev.qc
 impulse.qc
 

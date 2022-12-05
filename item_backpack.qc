@@ -279,6 +279,8 @@ void() DropBackpack =
 			item.netname = "Rocket Launcher";
 		else if (item.items == IT_LIGHTNING)
 			item.netname = "Thunderbolt";
+		else if (item.items == IT_PLASMA_GUN)
+			item.netname = "Plasma Gun";
 		else
 			item.netname = string_null;
 		
