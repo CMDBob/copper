@@ -290,7 +290,7 @@ void() W_FireLightning =
 	local	vector		org;
 	local	float		cells;
 
-	if (self.ammo_cells < 1)
+	if (self.ammo_cells < 2)
 	{
 		W_SelectBestWeapon();
 		return;
@@ -302,7 +302,7 @@ void() W_FireLightning =
 		cells = self.ammo_cells;
 		self.ammo_cells = 0;
 		W_SetCurrentAmmo ();
-		T_RadiusDamage (self, self, 35*cells, world);
+		T_RadiusDamage (self, self, 17*cells, world);
 		return;
 	}
 
@@ -313,7 +313,7 @@ void() W_FireLightning =
 	}
 	self.punchangle_x = -2;
 
-	self.currentammo = self.ammo_cells = self.ammo_cells - 1;
+	self.currentammo = self.ammo_cells = self.ammo_cells - 2;
 	org = self.origin + '0 0 16'+ v_forward * 8;
 	
 	traceline2(org, org + v_forward * 720, self, TRACE_NOMONSTERS);

@@ -2,8 +2,8 @@
 // constants
 //================================================
 
-const string version_s = "Copper Quake 1.20 - 20 November 2022";
-const float version_f = 1.20;
+const string version_s = "CMDBobQuake 1.21 - Built from Copper";
+const float version_f = 1.21;
 
 const float	FALSE					= 0;
 const float TRUE					= 1;
@@ -121,8 +121,8 @@ const float	IT_NAILGUN				= 4;
 const float	IT_SUPER_NAILGUN		= 8;
 const float	IT_GRENADE_LAUNCHER		= 16;
 const float	IT_ROCKET_LAUNCHER		= 32;
-const float	IT_LIGHTNING			= 64;
-const float	IT_PLASMA_GUN			= 128;
+const float	IT_PLASMA_GUN			= 64;
+const float	IT_LIGHTNING			= 128;
 const float	IT_WEAPONS				= 255 + 4096;
 
 const float	IT_SHELLS				= 256;
@@ -286,7 +286,10 @@ const float	DEBUG_DMG_PER_CELL		= 30;
 const float	MAX_AMMO_SHELLS			= 100;
 const float	MAX_AMMO_NAILS			= 200;
 const float	MAX_AMMO_ROCKETS		= 100;
-const float	MAX_AMMO_CELLS			= 100;
+const float	MAX_AMMO_CELLS			= 200;
+
+// CMD Flags
+const float	CMDF_PLASMAFIRED = 1;
 
 //================================================
 

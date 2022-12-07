@@ -298,7 +298,7 @@ void() weapon_lightning =
 	precache_model_safe ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
 	self.items = IT_LIGHTNING;
-	self.ammo_cells = 12;
+	self.ammo_cells = 24;
 	self.netname = "Thunderbolt";
 	StartWeapon();
 }

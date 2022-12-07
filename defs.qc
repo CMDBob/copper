@@ -318,6 +318,7 @@ string	keyType;
 .float		bubble_count;	// keeps track of the number of bubbles
 .float		healthtime;
 .string		deathtype;		// keeps track of how the player died
+.float		cmd_flags;	// mainly for plasma gun, allows me to do a doom style "cooldown" after a burst.
 
 // fog
 .vector		fog_color, fog_color2;

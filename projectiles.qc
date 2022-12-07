@@ -492,6 +492,23 @@ entity(vector org, vector vel) launch_rocket =
 	return missile;
 }
 
+entity(vector org, vector vel) launch_plasma = 
+{
+	entity plasma;
+	plasma = launch_projectile(org, vel, "laser");
+	plasma.touch = plasma_touch;
+	plasma.effects = EF_DIMLIGHT;
+	plasma.movetype = MOVETYPE_FLY;	// enforcer lasers aren't FLYMISSILE in id106
+
+	SUB_ChangeModel (plasma, "progs/laser.mdl");
+
+	plasma.dmg = 12;
+	
+	//fx_trail(a,b,color); // to do
+	
+	return plasma;
+}
+
 /*
 ========
 launch_lavamissile

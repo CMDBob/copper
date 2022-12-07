@@ -29,6 +29,11 @@ void() W_Precache =
 	precache_sound ("weapons/lhit.wav");		//lightning
 	precache_sound ("weapons/lstart.wav");		//lightning start
 //	precache_sound ("items/damage3.wav");
+	// Plasma gun stuff
+	precache_model ("progs/laser.mdl"); // Plasma bolt (TBR)
+	precache_sound ("enforcer/enfire.wav"); // Plasma bolt fire (TBR)
+	precache_sound ("enforcer/enfstop.wav"); // Plasma bolt hit (TBR)
+	
 
 // ax sounds	
 	precache_sound ("weapons/ax1.wav");			// ax swoosh
@@ -290,7 +295,7 @@ void() W_Attack =
 	}
 	else if (self.weapon == IT_PLASMA_GUN)
 	{
-		player_rocket1();
+		player_shot1();
 		W_FirePlasma();
 	}
 	else if (self.weapon == IT_LIGHTNING)
@@ -311,6 +316,10 @@ void() W_ChangeWeapon =
 	local	float	it, am, fl;
 	
 	if (self.customflags & CFL_PLUNGE)
+		return;
+	
+	// ah ah ah, no swapping while cooling off...
+	if (self.cmd_flags & CMDF_PLASMAFIRED)
 		return;
 		
 	it = self.items;
@@ -358,13 +367,13 @@ void() W_ChangeWeapon =
 	}
 	else if (self.impulse == 8)
 	{
-		fl = IT_LIGHTNING;
+		fl = IT_PLASMA_GUN;
 		if (self.ammo_cells < 1)
 			am = 1;
 	}
 	else if (self.impulse == 9)
 	{
-		fl = IT_PLASMA_GUN;
+		fl = IT_LIGHTNING;
 		if (self.ammo_cells < 1)
 			am = 1;
 	}
@@ -372,14 +381,18 @@ void() W_ChangeWeapon =
 	self.impulse = 0;
 	
 	if (!(self.items & fl))
-	{	// don't have the weapon or the ammo
-		sprint (self, "no weapon.\n");
+	{	// don't have the weapon
+		sprint (self, "You don't have the " );
+		sprint (self, GetWeaponName(fl));
+		sprint (self, ".\n");
 		return;
 	}
 	
 	if (am)
 	{	// don't have the ammo
-		sprint (self, "not enough ammo.\n");
+		sprint (self, "Not enough ammo to use the ");
+		sprint (self, GetWeaponName(fl));
+		sprint (self, ".\n");
 		return;
 	}
 
@@ -397,20 +410,24 @@ for players who insist on shuffling through their inventory the slow way
 float W_Next(float w) =
 {
 	if (w == IT_AXE) return IT_SHOTGUN;
-	else if (w == IT_PLASMA_GUN) return IT_AXE;
+	else if (w == IT_LIGHTNING) return IT_AXE;
 	else return w * 2;
 }
 
 float W_Prev(float w) =
 {
 	if (w == IT_SHOTGUN) return IT_AXE;
-	else if (w == IT_AXE) return IT_PLASMA_GUN;
+	else if (w == IT_AXE) return IT_LIGHTNING;
 	else return w / 2;
 }
 
 // cycle weapon up
 void() CycleWeaponCommand =
 {
+	// ah ah ah, no swapping while cooling off...
+	if (self.cmd_flags & CMDF_PLASMAFIRED)
+		return;
+		
 	float weap = self.weapon;
 	self.impulse = 0;
 	do {
@@ -427,6 +444,10 @@ void() CycleWeaponCommand =
 // cycle weapon down
 void() CycleWeaponReverseCommand =
 {
+	// ah ah ah, no swapping while cooling off...
+	if (self.cmd_flags & CMDF_PLASMAFIRED)
+		return;
+		
 	float weap = self.weapon;
 	self.impulse = 0;
 	do {
@@ -452,7 +473,15 @@ void() W_WeaponFrame =
 	if (self.impulse)
 		ImpulseCommands();
 	if (time < self.attack_finished)
+	{
+		// plasma flag...
+		if (!self.button0 && (self.cmd_flags & CMDF_PLASMAFIRED))
+		{
+			self.attack_finished = time + 1;
+			self.cmd_flags = self.cmd_flags & ~CMDF_PLASMAFIRED;
+		}
 		return;
+	}
 
 	// check for attack
 	if (self.button0)
@@ -463,3 +492,38 @@ void() W_WeaponFrame =
 }
 
 // impulses also moved to their own file
+
+/*
+============
+GetWeaponName
+
+Returns a weapon's name
+============
+*/
+
+string GetWeaponName(float weap)
+{
+	switch(weap)
+	{
+	case IT_AXE:
+	return "Axe";
+case IT_SHOTGUN:
+	return "Shotgun";
+case IT_SUPER_SHOTGUN:
+	return "Super Shotgun";
+case IT_NAILGUN:
+	return "Nailgun";
+case IT_SUPER_NAILGUN:
+	return "Perforator";
+case IT_GRENADE_LAUNCHER:
+	return "Grenade Launcher";
+case IT_ROCKET_LAUNCHER:
+	return "Rocket Launcher";
+case IT_LIGHTNING:
+	return "Thunderbolt";
+case IT_PLASMA_GUN:
+	return "Plasma Gun";	
+default:
+	return "Unknown Weapon???";
+	}
+}

@@ -17,6 +17,7 @@ void() Cheat_Keys =
 	key_give_silver(self);
 	key_give_gold(self);
 	stuffcmd(self,"bf\n");
+	sprint(self, "Keys Added\n");
 }
 
 
@@ -51,6 +52,7 @@ void() Cheat_Items =
 
 	stuffcmd(self,"bf\n");
 	W_ResetWeaponState();
+	sprint(self, "Ammo (no keys) Added\n");
 }
 
 // --------------------------------
@@ -90,6 +92,7 @@ void() Cheat_Genocide =
 		}
 		t = nextent(t);
 	}
+	sprint(self, "All monsters killed\n");
 }
 
 // --------------------------------
@@ -177,6 +180,7 @@ void() ImpulseCommands =
 	case 6:
 	case 7:
 	case 8:
+	case 9:
 		W_ChangeWeapon();
 		break;
 	case 10:
@@ -204,40 +208,40 @@ void() ImpulseCommands =
 		nav_deleteNode();
 		break;
 	*/
-	case 64:
+	case 150:
 		dev_i_cant_see();
 		break;
-	case 72:
+	case 151:
 		dev_test();
 		break;
-	case 80:
+	case 152:
 		dev_add_meatball();
 		break;
-	case 81:
+	case 153:
 		dev_remove_meatball();
 		break;
-	case 100:
+	case 154:
 		dev_invoke();
 		break;
-	case 101:
+	case 155:
 		dev_reveal();
 		break;
-	case 102:
+	case 156:
 		dev_trigger();
 		break;
-	case 103:
+	case 157:
 		dev_hitpoints();
 		break;
-	case 104:
+	case 158:
 		dev_serverflags();
 		break;
-	case 105:
+	case 159:
 		dev_warp();
 		break;
-	case 106:
+	case 160:
 		dev_whatami();
 		break;
-	case 108:
+	case 161:
 		dev_tracetest();
 		break;
 	case 127:
@@ -250,10 +254,11 @@ void() ImpulseCommands =
 		centerprint(self, version_s);
 		break;
 	
-	case 9:
+	// That makes sense to me lol. Plus I need impulse 9 for weapon switching...
+	case 101:
 		Cheat_Items();
 		break;
-	case 99:
+	case 102:
 		Cheat_Keys();
 		break;
 	// how about, execute order six?
