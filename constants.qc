@@ -114,16 +114,16 @@ const float	SPAWN_COOPONLY		= 4096;
 const float	SPAWN_NOTCOOP		= 8192;
 
 // items
-const float	IT_AXE					= 4096;
-const float	IT_SHOTGUN				= 1;
+const float	IT_AXE				= 4096;
+const float	IT_SHOTGUN			= 1;
 const float	IT_SUPER_SHOTGUN		= 2;
-const float	IT_NAILGUN				= 4;
+const float	IT_NAILGUN			= 4;
 const float	IT_SUPER_NAILGUN		= 8;
 const float	IT_GRENADE_LAUNCHER		= 16;
 const float	IT_ROCKET_LAUNCHER		= 32;
 const float	IT_PLASMA_GUN			= 64;
 const float	IT_LIGHTNING			= 128;
-const float	IT_WEAPONS				= 255 + 4096;
+const float	IT_WEAPONS			= 255 + 4096;
 
 const float	IT_SHELLS				= 256;
 const float	IT_NAILS				= 512;
